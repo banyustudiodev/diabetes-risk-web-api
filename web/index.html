@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediksi Risiko Diabetes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <h1>Prediksi Risiko Diabetes</h1>
+      <p class="subtitle">
+        Aplikasi ini memprediksi risiko diabetes berdasarkan data kesehatan dasar.
+      </p>
+
+      <form id="predictionForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Pregnancies</label>
+            <input type="number" id="Pregnancies" required>
+          </div>
+
+          <div class="form-group">
+            <label>Glucose</label>
+            <input type="number" id="Glucose" required>
+          </div>
+
+          <div class="form-group">
+            <label>Blood Pressure</label>
+            <input type="number" id="BloodPressure" required>
+          </div>
+
+          <div class="form-group">
+            <label>Skin Thickness</label>
+            <input type="number" id="SkinThickness" required>
+          </div>
+
+          <div class="form-group">
+            <label>Insulin</label>
+            <input type="number" id="Insulin" required>
+          </div>
+
+          <div class="form-group">
+            <label>BMI</label>
+            <input type="number" step="0.1" id="BMI" required>
+          </div>
+
+          <div class="form-group">
+            <label>Diabetes Pedigree Function</label>
+            <input type="number" step="0.01" id="DiabetesPedigreeFunction" required>
+          </div>
+
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="Age" required>
+          </div>
+        </div>
+
+        <button type="submit">Prediksi Sekarang</button>
+      </form>
+
+      <div id="resultBox" class="result hidden">
+        <h2>Hasil Prediksi</h2>
+        <p id="resultText"></p>
+        <p id="probabilityText"></p>
+        <p id="riskLevelText"></p>
+      </div>
+
+      <p class="note">
+        Catatan: Aplikasi ini hanya digunakan untuk pembelajaran dan tidak menggantikan diagnosis medis.
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
