@@ -583,6 +583,14 @@ DiabetesPedigreeFunction
 Age
 ```
 
+
+## Tampilan Aplikasi Web
+
+Berikut adalah tampilan halaman prediksi risiko diabetes.
+
+![Tampilan Web Prediksi Diabetes](https://github.com/banyustudiodev/diabetes-risk-web-api/blob/main/Screenshot%202026-05-17%20at%2015.49.56.png)
+
+
 ## Catatan Penting
 
 Aplikasi ini dibuat untuk tujuan pembelajaran. Hasil prediksi tidak boleh digunakan sebagai diagnosis medis. Sistem ini hanya merupakan simulasi integrasi Machine Learning, REST API, dan aplikasi web.
