@@ -2,16 +2,19 @@
 
 Project ini merupakan aplikasi sederhana untuk memprediksi risiko diabetes menggunakan model Machine Learning yang diintegrasikan dengan REST API dan aplikasi web.
 
-Project ini dibuat untuk praktikum Mata Kuliah **Pemrograman Berbasis Platform**. Fokus utama project ini adalah memahami proses integrasi antara model Machine Learning, API, dan aplikasi web.
+Project ini dibuat untuk praktikum Mata Kuliah **Pemrograman Berbasis Platform**. Fokus utama project ini adalah memahami proses integrasi antara model Machine Learning, REST API, dan aplikasi web.
 
 ## Deskripsi Project
 
 Aplikasi ini menggunakan model Machine Learning yang telah dilatih sebelumnya di Google Colab. Model tersebut disimpan dalam format `.pkl`, kemudian digunakan oleh REST API berbasis Flask untuk memproses data input dari pengguna.
 
-Pengguna mengisi data kesehatan melalui halaman web. Data tersebut dikirim ke API dalam format JSON. API akan melakukan proses prediksi menggunakan model Machine Learning, kemudian mengembalikan hasil prediksi ke halaman web.
+Pengguna mengisi data kesehatan melalui halaman web. Data tersebut dikirim ke API dalam format JSON. API melakukan prediksi menggunakan model Machine Learning, kemudian mengembalikan hasil prediksi ke halaman web.
 
-URL Google Colab: https://colab.research.google.com/drive/1q6wwulYJQHKV3IrnLsC6p6SHagnUGEJj?usp=sharing
+URL Google Colab:
 
+```text
+https://colab.research.google.com/drive/1q6wwulYJQHKV3IrnLsC6p6SHagnUGEJj?usp=sharing
+```
 
 ## Alur Sistem
 
@@ -48,7 +51,8 @@ diabetes-risk-web-api/
 │
 ├── api/
 │   ├── app.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── venv/
 │
 ├── model/
 │   ├── diabetes_model.pkl
@@ -70,6 +74,7 @@ diabetes-risk-web-api/
 | `api/` | Berisi file backend API Flask |
 | `api/app.py` | File utama untuk menjalankan REST API |
 | `api/requirements.txt` | Daftar library Python yang digunakan |
+| `api/venv/` | Virtual environment Python, tidak perlu diunggah ke GitHub |
 | `model/` | Berisi file model dan scaler hasil training dari Google Colab |
 | `model/diabetes_model.pkl` | File model Machine Learning |
 | `model/scaler.pkl` | File scaler untuk normalisasi input |
@@ -174,27 +179,47 @@ numpy
 scikit-learn
 ```
 
+Buat virtual environment:
+
+```bash
+python3 -m venv venv
+```
+
+Aktifkan virtual environment:
+
+```bash
+source venv/bin/activate
+```
+
+Jika berhasil, terminal akan menampilkan awalan seperti berikut:
+
+```text
+(venv) mac@macs-MacBook-Pro api %
+```
+
 Install library yang dibutuhkan:
 
 ```bash
 pip install flask flask-cors numpy scikit-learn
 ```
 
-Jika menggunakan virtual environment:
+Simpan daftar library ke file `requirements.txt`:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install flask flask-cors numpy scikit-learn
+pip freeze > requirements.txt
 ```
 
 Catatan untuk macOS: gunakan `python3`, bukan `python`.
 
-## Tahap 4: Menjalankan API
+## Tahap 4: Menjalankan API Flask
 
-Jalankan API dari folder `api`:
+API Flask dijalankan dari folder `api`.
+
+Jalankan perintah berikut:
 
 ```bash
+cd api
+source venv/bin/activate
 python3 app.py
 ```
 
@@ -220,6 +245,8 @@ Respons yang benar:
   "status": "success"
 }
 ```
+
+Catatan penting: terminal yang menjalankan API Flask tidak boleh ditutup selama aplikasi web digunakan.
 
 ## Tahap 5: Menguji Endpoint Prediksi
 
@@ -259,11 +286,6 @@ Contoh response JSON:
 ## Tahap 6: Membuat Tampilan Web
 
 Setelah API berhasil berjalan, tahap berikutnya adalah membuat tampilan web.
-
-Pastikan cek dulu env nya dah aktif atau belum:
-```text
-source venv/bin/activate
-```
 
 Buat tiga file di dalam folder `web/`:
 
@@ -323,28 +345,96 @@ fetch("http://127.0.0.1:5000/predict", {
 
 Jika API berhasil memberikan respons, hasil prediksi akan ditampilkan pada halaman web.
 
-## Tahap 9: Menjalankan Aplikasi Web
+## Tahap 9: Menjalankan Aplikasi dengan 2 Terminal
 
-Pastikan API Flask sudah berjalan terlebih dahulu:
+Pada project ini, aplikasi dijalankan menggunakan 2 terminal.
+
+Terminal pertama digunakan untuk menjalankan API Flask. Terminal kedua digunakan untuk menjalankan halaman web.
+
+### Terminal 1: Menjalankan API Flask
+
+Buka terminal pertama di VS Code, lalu jalankan:
 
 ```bash
 cd api
+source venv/bin/activate
 python3 app.py
 ```
 
-Setelah itu, buka file berikut di browser:
+Pastikan muncul informasi bahwa Flask berjalan di:
 
 ```text
-web/index.html
+http://127.0.0.1:5000
 ```
 
-Isi form prediksi, lalu klik tombol prediksi.
+Biarkan terminal pertama tetap aktif. Jangan ditutup.
+
+### Terminal 2: Menjalankan Web HTML
+
+Buka terminal kedua di VS Code.
+
+Dari folder utama project, masuk ke folder `web`:
+
+```bash
+cd web
+```
+
+Jalankan web server sederhana:
+
+```bash
+python3 -m http.server 5500
+```
+
+Jika berhasil, web akan berjalan di:
+
+```text
+http://localhost:5500
+```
+
+Buka browser, lalu akses:
+
+```text
+http://localhost:5500
+```
+
+Setelah halaman web terbuka, isi form prediksi, lalu klik tombol prediksi.
 
 Jika berhasil, halaman web akan menampilkan:
 
 - Hasil prediksi
 - Probabilitas risiko
 - Tingkat risiko
+
+## Ringkasan Cara Menjalankan Project
+
+Gunakan dua terminal.
+
+### Terminal 1
+
+```bash
+cd api
+source venv/bin/activate
+python3 app.py
+```
+
+Akses API:
+
+```text
+http://127.0.0.1:5000/
+```
+
+### Terminal 2
+
+```bash
+cd web
+python3 -m http.server 5500
+```
+
+Akses web:
+
+```text
+http://localhost:5500
+```
 
 ## Tahap 10: Menyimpan Project ke GitHub
 
@@ -428,9 +518,10 @@ python3 app.py
 
 ### 2. `ModuleNotFoundError: No module named 'flask'`
 
-Install Flask terlebih dahulu:
+Aktifkan `venv`, lalu install Flask:
 
 ```bash
+source venv/bin/activate
 pip install flask flask-cors
 ```
 
@@ -450,7 +541,7 @@ bukan:
 
 ### 4. Web tidak bisa mengakses API
 
-Pastikan API sudah berjalan di:
+Pastikan API sudah berjalan di terminal pertama:
 
 ```text
 http://127.0.0.1:5000
@@ -463,7 +554,21 @@ from flask_cors import CORS
 CORS(app)
 ```
 
-### 5. Hasil prediksi error
+Pastikan endpoint di `script.js` mengarah ke:
+
+```text
+http://127.0.0.1:5000/predict
+```
+
+### 5. Halaman HTML terbuka, tetapi hasil prediksi tidak muncul
+
+Periksa tiga hal berikut:
+
+1. API Flask harus aktif di Terminal 1.
+2. Web server harus aktif di Terminal 2.
+3. Browser harus membuka alamat `http://localhost:5500`, bukan hanya membuka file langsung dari Finder.
+
+### 6. Hasil prediksi error
 
 Pastikan nama field yang dikirim dari web sama dengan nama field yang diminta API:
 
@@ -491,9 +596,9 @@ Keputusan medis tetap harus dilakukan oleh tenaga kesehatan profesional.
 - [x] REST API Flask dibuat
 - [x] Endpoint utama `/` berjalan
 - [x] Endpoint prediksi `/predict` berhasil diuji
-- [ ] Tampilan web dibuat
-- [ ] Web berhasil terhubung dengan API
-- [ ] Project selesai dan didokumentasikan di GitHub
+- [x] Tampilan web dibuat
+- [x] Web berhasil terhubung dengan API
+- [x] Project selesai dan didokumentasikan di GitHub
 
 ## Lisensi
 
