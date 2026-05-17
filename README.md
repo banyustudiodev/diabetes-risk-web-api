@@ -260,6 +260,11 @@ Contoh response JSON:
 
 Setelah API berhasil berjalan, tahap berikutnya adalah membuat tampilan web.
 
+Pastikan cek dulu env nya dah aktif atau belum:
+```text
+source venv/bin/activate
+```
+
 Buat tiga file di dalam folder `web/`:
 
 ```text
